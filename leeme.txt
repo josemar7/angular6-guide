@@ -1,0 +1,79 @@
+Instalar cliente: npm install -g @angular/cli@latest
+Crear aplicación: ng new my-first-app
+arranacar el servidor: ng serve
+
+instalar bootstrap: npm install --save bootstrap@3
+añadir bootstrap al proyecto: en angular.json, en "styles", añadir una entrada -> "node_modules/bootstrap/dist/css/bootstrap.min.css"
+
+Crear un componente: ng generate component servers (ng g c servers)
+
+
+- databinding:
+output: []
+input:  ()
+
+DATABINDING
+------------------------
+página 1:
+
+      <app-server-element
+      *ngFor="let serverElement of serverElements"
+      [srvElement]="serverElement"
+      [name]="serverElement.name">
+        <p #contentParagraph>
+          <strong *ngIf="serverElement.type === 'server'" style="color: red">{{ serverElement.content }}</strong>
+          <em *ngIf="serverElement.type === 'blueprint'">{{ serverElement.content }}</em>
+        </p>
+      </app-server-element>
+
+página 2:
+
+  <div class="panel-heading" #heading>{{ name }}</div>
+
+component de página 2:
+
+  @Input('srvElement') element: {type: string, name: string, content: string};
+  @Input() name: string;
+  @ContentChild('contentParagraph') paragraph;
+  @ViewChild('heading') header: ElementRef;
+
+página 1:
+
+    <app-cockpit
+    (serverCreated)="onServerAdded($event)"
+    (bpCreated)="onBluePrintAdded($event)"></app-cockpit>
+
+component de página 1:
+
+  onServerAdded(serverData: {serverName: string, serverContent: string}) {
+    this.serverElements.push({
+      type: 'server',
+      name: serverData.serverName,
+      content: serverData.serverContent
+    });
+  }
+
+  onBluePrintAdded(blueprintData: {serverName: string, serverContent: string}) {
+    this.serverElements.push({
+      type: 'blueprint',
+      name: blueprintData.serverName,
+      content: blueprintData.serverContent
+    });
+  }
+
+  component de página 2:
+
+    @Output() serverCreated = new EventEmitter<{serverName: string, serverContent: string}>();
+    @Output('bpCreated') blueprintCreated = new EventEmitter<{serverName: string, serverContent: string}>();
+
+    onAddServer(serverNameInput: HTMLInputElement) {
+      this.serverCreated.emit({serverName: serverNameInput.value,
+        serverContent: this.serverContentInput.nativeElement.value});
+    }
+
+    onAddBlueprint(serverNameInput: HTMLInputElement) {
+      this.blueprintCreated.emit({serverName: serverNameInput.value,
+        serverContent: this.serverContentInput.nativeElement.value});
+    }
+
+

@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { Routes, RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { ServerComponent } from './server/server.component';
@@ -25,15 +24,9 @@ import { ServersRoutingComponent } from './routing/servers/servers-routing.compo
 import { UserRoutingComponent } from './routing/users/user/user-routing.component';
 import { UsersRoutingComponent } from './routing/users/users-routing.component';
 import { ServersRoutingService } from './routing/servers/servers-routing.service';
+import { PageNotFoundComponent } from './routing/page-not-found/page-not-found.component';
+import { AppRoutingModule } from './app-routing.module';
 
-const appRoutes: Routes = [
-  { path: '', component: HomeRoutingComponent },
-  { path: 'users', component: UsersRoutingComponent },
-  { path: 'users/:id/:name', component: UserRoutingComponent },
-  { path: 'servers', component: ServersRoutingComponent },
-  { path: 'servers/:id', component: ServerRoutingComponent },
-  { path: 'servers/:id/edit', component: EditServerRoutingComponent }
-];
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,13 +46,14 @@ const appRoutes: Routes = [
     ServerRoutingComponent,
     ServersRoutingComponent,
     UserRoutingComponent,
-    UsersRoutingComponent
+    UsersRoutingComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
-    RouterModule.forRoot(appRoutes)
+    AppRoutingModule
   ],
   providers: [AccountsService, LoggingService, ServersRoutingService],
   bootstrap: [AppComponent]

@@ -7,18 +7,27 @@ import { ServersRoutingComponent } from './routing/servers/servers-routing.compo
 import { ServerRoutingComponent } from './routing/servers/server/server-routing.component';
 import { EditServerRoutingComponent } from './routing/servers/edit-server/edit-server-routing.component';
 import { PageNotFoundComponent } from './routing/page-not-found/page-not-found.component';
+import { AuthGuard } from './auth-guard.service';
+import { CanDeactivateGuard } from './routing/servers/edit-server/can-deactivate-guard-service';
+import { ErrorPageComponent } from './routing/error-page/error-page.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeRoutingComponent },
   { path: 'users', component: UsersRoutingComponent, children: [
     { path: ':id/:name', component: UserRoutingComponent }
   ] },
-  { path: 'servers', component: ServersRoutingComponent, children: [
+  { path: 'servers',
+  // canActivate: [AuthGuard],
+  canActivateChild: [AuthGuard],
+  component: ServersRoutingComponent,
+  children: [
     { path: ':id', component: ServerRoutingComponent },
-    { path: ':id/edit', component: EditServerRoutingComponent }
+    { path: ':id/edit', component: EditServerRoutingComponent, canDeactivate: [CanDeactivateGuard] }
   ] },
-  { path: 'not-found', component: PageNotFoundComponent },
+  // { path: 'not-found', component: PageNotFoundComponent },
+  { path: 'not-found', component: ErrorPageComponent, data: {message: 'Page not found!'} },
   { path: '**', redirectTo: '/not-found' }
+
 ];
 
 @NgModule({

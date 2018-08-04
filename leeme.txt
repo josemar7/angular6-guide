@@ -77,3 +77,23 @@ component de página 1:
     }
 
 
+ROUNTING
+------------------
+
+1) Crear un módulo nuevo así:
+
+const appRoutes: Routes = [
+  { path: '', redirectTo: '/recipes', pathMatch: 'full' },
+  { path: 'recipes', component: RecipesComponent },
+  { path: 'shopping-list', component: ShoppingListComponent }
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(appRoutes)],
+  exports: [RouterModule]
+})
+export class AppRoutingMoule {
+
+}
+
+2) importarlo en app.module.ts

@@ -97,3 +97,40 @@ export class AppRoutingMoule {
 }
 
 2) importarlo en app.module.ts
+
+3) en el html:
+<li routerLinkActive="active"><a routerLink="/recipes">Recipes</a></li>
+
+3) rutas hijas:
+
+  { path: 'recipes', component: RecipesComponent, children: [
+    { path: '', component: RecipeStartComponent },
+    { path: ':id', component: RecipeDetailComponent }
+  ] },
+
+4) en el html:
+<router-outlet></router-outlet>
+
+5) parámetros (Component):
+
+constructor(private route: ActivatedRoute) { }
+
+  ngOnInit() {
+    this.route.params.subscribe(
+      (params: Params) => {
+        this.id = +params['id'];
+        this.recipe = this.recipeService.getRecipe(this.id);
+      }
+    );
+  }
+
+6) parámetros (HTML):
+
+<a
+style="cursor: pointer;"
+[routerLink]="[index]"
+class="list-group-item clearfix">
+
+
+
+

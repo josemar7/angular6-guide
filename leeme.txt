@@ -152,6 +152,62 @@ this.usersService.userActivated.next(this.id);
       }
     );
 
+FORMS
+-----------
+
+1) importar FormsModule
+
+2) En el HTML:
+      <form (ngSubmit)="onSubmit()"
+      #f="ngForm">
+      ............
+      <input type="email"
+      id="email"
+      class="form-control"
+      ngModel
+      name="email"
+      required
+      email
+      #email="ngModel">
+      <span class="help-block"
+      *ngIf="!email.valid && email.touched">Please enter a valid email!</span>
+
+  Para fijar un valor por defecto:
+  [ngModel]="defaultQuestion"
+
+3) En el Component:
+
+  - Referencia al form:  @ViewChild('f') signup: NgForm;
+  - Submit:
+      onSubmit() {
+        this.submitted = true;
+        this.user.username = this.signup.value.userData.username;
+        this.user.email = this.signup.value.userData.email;
+        this.user.secretQuestion = this.signup.value.secret;
+        this.user.answer = this.signup.value.questionAnswer;
+        this.user.gender = this.signup.value.gender;
+        this.signup.reset();
+      }
+  - Establecer algún valor:
+      this.signup.form.patchValue({
+        userData: {
+          username: suggestedName
+        }
+      });
+  - Establecer todos los valores:
+     this.signup.setValue({
+       userData: {
+         username: suggestedName,
+         email: ''
+       },
+       secret: 'pet',
+       questionAnswer: '',
+       gender: 'male'
+     });
+
+
+
+
 
 
 

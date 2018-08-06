@@ -5,3 +5,7 @@ h3 {
 .container {
   margin-top: 30px;
 }
+
+.ng-invalid {
+  border: 1px solid red;
+}

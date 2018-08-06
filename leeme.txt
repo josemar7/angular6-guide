@@ -131,6 +131,27 @@ style="cursor: pointer;"
 [routerLink]="[index]"
 class="list-group-item clearfix">
 
+OBSERVABLE
+--------------
+
+1) En un Servicio
+
+import { Subject } from 'rxjs/Subject'
+
+userActivated = new Subject();
+
+2) Llamada al servicio, para pasar un parámetro:
+
+this.usersService.userActivated.next(this.id);
+
+3) Suscribir el Subject (Observable):
+
+    this.usersService.userActivated.subscribe(
+      (id: number) => {
+        console.log(id);
+      }
+    );
+
 
 
 

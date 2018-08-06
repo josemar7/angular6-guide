@@ -11,9 +11,13 @@ import { PageNotFoundComponent } from './routing/page-not-found/page-not-found.c
 import { AuthGuard } from './auth-guard.service';
 import { CanDeactivateGuard } from './routing/servers/edit-server/can-deactivate-guard-service';
 import { ErrorPageComponent } from './routing/error-page/error-page.component';
+import { HomeObsComponent } from './observable/home-obs/home-obs.component';
+import { UserObsComponent } from './observable/user-obs/user-obs.component';
 
 const appRoutes: Routes = [
-  { path: '', component: HomeRoutingComponent },
+  // { path: '', component: HomeRoutingComponent },
+  { path: '', component: HomeObsComponent },
+  { path: 'user/:id', component: UserObsComponent },
   { path: 'users', component: UsersRoutingComponent, children: [
     { path: ':id/:name', component: UserRoutingComponent }
   ] },

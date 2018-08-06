@@ -31,6 +31,9 @@ import { AuthGuard } from './auth-guard.service';
 import { CanDeactivateGuard } from './routing/servers/edit-server/can-deactivate-guard-service';
 import { ErrorPageComponent } from './routing/error-page/error-page.component';
 import { ServerResolver } from './routing/servers/server/server-resolver.service';
+import { HomeObsComponent } from './observable/home-obs/home-obs.component';
+import { UserObsComponent } from './observable/user-obs/user-obs.component';
+import { UsersService } from './observable/users.service';
 
 @NgModule({
   declarations: [
@@ -53,7 +56,9 @@ import { ServerResolver } from './routing/servers/server/server-resolver.service
     UserRoutingComponent,
     UsersRoutingComponent,
     PageNotFoundComponent,
-    ErrorPageComponent
+    ErrorPageComponent,
+    HomeObsComponent,
+    UserObsComponent
   ],
   imports: [
     BrowserModule,
@@ -62,7 +67,7 @@ import { ServerResolver } from './routing/servers/server/server-resolver.service
     AppRoutingModule
   ],
   providers: [AccountsService, LoggingService, ServersRoutingService, AuthService, AuthGuard,
-    CanDeactivateGuard, ServerResolver],
+    CanDeactivateGuard, ServerResolver, UsersService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

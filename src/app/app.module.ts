@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
@@ -34,6 +34,7 @@ import { ServerResolver } from './routing/servers/server/server-resolver.service
 import { HomeObsComponent } from './observable/home-obs/home-obs.component';
 import { UserObsComponent } from './observable/user-obs/user-obs.component';
 import { UsersService } from './observable/users.service';
+import { ReactiveFormComponent } from './form/reactive-form/reactive-form.component';
 
 @NgModule({
   declarations: [
@@ -58,13 +59,15 @@ import { UsersService } from './observable/users.service';
     PageNotFoundComponent,
     ErrorPageComponent,
     HomeObsComponent,
-    UserObsComponent
+    UserObsComponent,
+    ReactiveFormComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule
   ],
   providers: [AccountsService, LoggingService, ServersRoutingService, AuthService, AuthGuard,
     CanDeactivateGuard, ServerResolver, UsersService],

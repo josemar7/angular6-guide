@@ -152,8 +152,8 @@ this.usersService.userActivated.next(this.id);
       }
     );
 
-FORMS
------------
+FORMS TEMPLATES
+---------------------
 
 1) importar FormsModule
 
@@ -204,6 +204,82 @@ FORMS
        questionAnswer: '',
        gender: 'male'
      });
+
+
+FORMS REACTIVE
+------------------------
+
+1) Incluir import ReactiveFormsModule en el Module
+
+2) En el HTML:
+
+  <div class="form-group">
+    <label for="email">email</label>
+    <input
+      type="text"
+      id="email"
+      formControlName="email"
+      class="form-control">
+    <span class="help-block"
+      *ngIf="!signupForm.get('userData.email').valid && signupForm.get('userData.email').touched">
+      Please enter a valid email!</span>
+  </div>
+
+  3) En el Component:
+
+    - Definición del form:
+    signupForm: FormGroup;
+
+    - En el método ngOnInit:
+
+      this.signupForm = new FormGroup({
+        'userData': new FormGroup({
+          'username': new FormControl(null, [Validators.required, this.forbiddenNames.bind(this)]),
+          'email': new FormControl(null, [Validators.required, Validators.email], this.forbiddenEmails)
+        }),
+        'gender': new FormControl('male'),
+        'hobbies': new FormArray([])
+      });
+
+  4) Formulario dinámico:
+
+    - En el HTML:
+
+      <div formArrayName="hobbies">
+        <h4>Your Hobbies</h4>
+        <button class="btn btn-default"
+        type="button"
+        (click)="onAddHobby()">Add Hobby</button>
+        <div class="form-group"
+        *ngFor="let hobbyControl of signupForm.get('hobbies').controls; let i = index">
+          <input type="text"
+          class="form-control"
+          [formControlName]="i">
+        </div>
+      </div>
+
+    - En el Component:
+
+      onAddHobby() {
+        const control = new FormControl(null, Validators.required);
+        (<FormArray>this.signupForm.get('hobbies')).push(control);
+      }
+
+  5) Validators personalizados:
+
+    - En el Component:
+
+      forbiddenNames(control: FormControl): {[s: string]: boolean} {
+        if (this.forbiddenUsernames.indexOf(control.value) !== -1) {
+          return {'nameIsForbidden': true};
+        }
+        return null;
+      }
+
+      ...
+
+      'username': new FormControl(null, [Validators.required, this.forbiddenNames.bind(this)]),
+      "bind(this)" es para no perder la referencia del 'this' dentro del método
 
 
 

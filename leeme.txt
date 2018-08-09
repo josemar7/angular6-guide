@@ -281,8 +281,58 @@ FORMS REACTIVE
       'username': new FormControl(null, [Validators.required, this.forbiddenNames.bind(this)]),
       "bind(this)" es para no perder la referencia del 'this' dentro del método
 
+  6) Validators asíncronos:
+
+    - En el Component:
+
+      forbiddenEmails(control: FormControl): Promise<any> | Observable<any> {
+        const promise = new Promise<any>((resolve, reject) => {
+          setTimeout(() => {
+            if (control.value === 'test@test.com') {
+              resolve({'emailIsForbidden': true});
+            } else {
+              resolve(null);
+            }
+          }, 1500);
+        });
+        return promise;
+      }
+
+      ...
+
+      (el validator se posiciona como tercer parámetro)
+      'email': new FormControl(null, [Validators.required, Validators.email], this.forbiddenEmails)
 
 
+
+PIPES
+-----------
+
+1) Crear pipe: ng g p nombre --spec false (no crea fichero spec)
+
+2) built-in pipes:
+    {{ server.instanceType | uppercase }} |
+    {{ server.started | date:'fullDate' | uppercase }}
+
+3) con 'pure = false', al actualizar los datos del pipe se invoca al pipe (bajo rendimiento)
+@Pipe({
+  name: 'filter',
+  pure: false
+})
+
+4) Pipe asíncrono:
+
+  - en el Component:
+    appStatus = new Promise(
+    (resolve, reject) => {
+      setTimeout(() => {
+        resolve('stable');
+      }, 2000);
+    }
+    );
+
+  - en el HTML: con 'async' devuelve el resultado de la promesa
+    <h2>App Status: {{appStatus | async}}</h2>
 
 
 

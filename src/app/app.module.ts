@@ -35,6 +35,9 @@ import { HomeObsComponent } from './observable/home-obs/home-obs.component';
 import { UserObsComponent } from './observable/user-obs/user-obs.component';
 import { UsersService } from './observable/users.service';
 import { ReactiveFormComponent } from './form/reactive-form/reactive-form.component';
+import { PipesComponent } from './pipes/pipes.component';
+import { ShortenPipe } from './pipes/shorten.pipe';
+import { FilterPipe } from './pipes/filter.pipe';
 
 @NgModule({
   declarations: [
@@ -60,7 +63,10 @@ import { ReactiveFormComponent } from './form/reactive-form/reactive-form.compon
     ErrorPageComponent,
     HomeObsComponent,
     UserObsComponent,
-    ReactiveFormComponent
+    ReactiveFormComponent,
+    PipesComponent,
+    ShortenPipe,
+    FilterPipe
   ],
   imports: [
     BrowserModule,

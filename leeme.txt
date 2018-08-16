@@ -335,5 +335,65 @@ PIPES
     <h2>App Status: {{appStatus | async}}</h2>
 
 
+HTTP
+----------
+
+1) Importar HttpModule en app.module
+
+2) Métodos POST y PUT
+
+  - En el Service: devuelve un Observable
+
+    const headers = new Headers({'Content-Type': 'application/json'});
+    // return this.http.post('https://udemy-ng-http-6003d.firebaseio.com/data.json',
+    // servers,
+    // {headers: headers});
+    return this.http.put('https://udemy-ng-http-6003d.firebaseio.com/data.json',
+    servers,
+    {headers: headers});
+
+  - En el Component:
+
+    this.serverService.storeServers(this.servers)
+    .subscribe(
+      (response) => console.log(response),
+      (error) => console.log(error)
+    );
+
+3) Método get
+
+  - En el Service:
+
+    return this.http.get('https://udemy-ng-http-6003d.firebaseio.com/data')
+    .map(
+      (response: Response) => {
+        const data = response.json();
+        for (const server of data) {
+          server.name = 'FETCHED_' + server.name;
+        }
+        return data;
+      }
+    )
+    .catch(
+      (error: Response) => {
+        return Observable.throw('Something went wrong!');
+      }
+    );
+
+  - En el Component:
+
+    this.serverService.getServers()
+    .subscribe(
+      (servers: any[]) => this.servers = servers,
+      (error) => console.log(error)
+    );
+
+4) GET de forma asíncrona:
+
+  - En el Component: appName = this.serverService.getAppName();
+
+  - En el HTML: <h1>{{ appName | async }}</h1>
+
+
 
 

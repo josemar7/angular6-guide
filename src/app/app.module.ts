@@ -38,6 +38,8 @@ import { ReactiveFormComponent } from './form/reactive-form/reactive-form.compon
 import { PipesComponent } from './pipes/pipes.component';
 import { ShortenPipe } from './pipes/shorten.pipe';
 import { FilterPipe } from './pipes/filter.pipe';
+import { HttpComponent } from './http/http.component';
+import { ServerService } from './http/server.service';
 
 @NgModule({
   declarations: [
@@ -66,7 +68,8 @@ import { FilterPipe } from './pipes/filter.pipe';
     ReactiveFormComponent,
     PipesComponent,
     ShortenPipe,
-    FilterPipe
+    FilterPipe,
+    HttpComponent
   ],
   imports: [
     BrowserModule,
@@ -76,7 +79,7 @@ import { FilterPipe } from './pipes/filter.pipe';
     ReactiveFormsModule
   ],
   providers: [AccountsService, LoggingService, ServersRoutingService, AuthService, AuthGuard,
-    CanDeactivateGuard, ServerResolver, UsersService],
+    CanDeactivateGuard, ServerResolver, UsersService, ServerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
